@@ -8,18 +8,9 @@
 
 header('Content-type:text/html;charset=utf-8');
 
-// connect mysql
-$link = mysqli_connect('localhost', 'root', '123456', 'php_dev', '3307');
-
-// 判断是否连接成功
-if (!$link) {
-    die('connect fail!' . mysqli_connect_error());
-}
-//echo 'success!';
-
-//选择字符集，选择数据库
-mysqli_query($link, 'set names utf8');
-//mysqli_query($link, 'use php_dev');
+require './public_function.php';
+dbInit();
+$link = new mysqli($host = 'localhost', $user = 'root', $password = '123456', $database = 'php_dev', $port = '3307');
 
 /*
  * 生成order子句
@@ -49,7 +40,7 @@ if (isset($_GET['keyword'])) {
     // 赋值
     $keyword = $_GET['keyword'];
     // 转义
-    $keyword = mysqli_real_escape_string($link, $keyword);
+    $keyword = mysqli_real_escape_string($query = "$keyword");
     // 拼接
     $sql_where = "where e_name like '%$keyword%'";
 }
@@ -93,16 +84,18 @@ $sql_limit = "limit $lim,$page_size";
 // 准备SQL语句
 //$sql = 'SELECT * FROM emp_info';
 $sql = "SELECT * FROM emp_info $sql_where $sql_order $sql_limit";
-// 执行SQL
-$result = mysqli_query($link, $sql);
-//var_dump($result);
+//// 执行SQL
+//$result = mysqli_query($link, $sql);
+////var_dump($result);
 
-// 定义员工数组，用以保存员工信息
-$emp_info = array();
-// 遍历结果集，获取每位员工的详细数据
-while ($row = mysqli_fetch_assoc($result)) {
-    $emp_info[] = $row;
-}
+//// 定义员工数组，用以保存员工信息
+//$emp_info = array();
+//// 遍历结果集，获取每位员工的详细数据
+//while ($row = mysqli_fetch_assoc($result)) {
+//    $emp_info[] = $row;
+//}
+$emp_info = fetchALL($sql);
+
 
 // 设置常量，用以判断视图文件是否由此文件加载
 define('APP', 'shawn');
