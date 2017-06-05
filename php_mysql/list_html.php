@@ -54,5 +54,6 @@ if (!defined('APP')) die('error!');
 </table>
 <!-- 输出分页链接 -->
 <div><?php echo $page_html; ?></div>
+<div><a href="./empAdd.php">添加员工</a></div>
 </body>
 </html>

@@ -9,8 +9,8 @@
 header('Content-type:text/html;charset=utf-8');
 
 require './public_function.php';
-dbInit();
-$link = new mysqli($host = 'localhost', $user = 'root', $password = '123456', $database = 'php_dev', $port = '3307');
+//dbInit();
+//$link = new mysqli($host = 'localhost', $user = 'root', $password = '123456', $database = 'php_dev', $port = '3307');
 
 /*
  * 生成order子句
@@ -40,7 +40,8 @@ if (isset($_GET['keyword'])) {
     // 赋值
     $keyword = $_GET['keyword'];
     // 转义
-    $keyword = mysqli_real_escape_string($query = "$keyword");
+//    $keyword = mysqli_real_escape_string($link, "$keyword");
+    $keyword = mysqli::real_escape_string("$keyword");
     // 拼接
     $sql_where = "where e_name like '%$keyword%'";
 }
@@ -53,8 +54,9 @@ $page = 1; // 假设当前用户访问的页码是1
 $page_size = 2;// 每页最大数据条数
 
 // 查询所有记录的行数
-$res = mysqli_query($link, 'SELECT * FROM emp_info');
+//$res = mysqli_query($link, 'SELECT * FROM emp_info');
 //$res = mysqli_query($link, 'SELECT count(1) FROM emp_info');
+$res = query("SELECT * FROM emp_info");
 //var_dump($res);
 //$count = mysqli_fetch_row($res);
 $count = mysqli_num_rows($res);

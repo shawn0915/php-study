@@ -18,11 +18,14 @@ function dbInit()
     if (!$link) {
         die('connect fail!' . mysqli_connect_error());
     }
+
+    return $link;
 //echo 'success!';
 
 //选择字符集，选择数据库
-    mysqli_query($link, 'set names utf8');
+//    mysqli_query($link, 'set names utf8');
 //    mysqli_query($query = 'use php_dev');
+//    mysqli::query('set names utf8');
 
 }
 
@@ -33,11 +36,11 @@ function dbInit()
  */
 function query($sql)
 {
-    $link = new mysqli($host = 'localhost', $user = 'root', $password = '123456', $database = 'php_dev', $port = '3307');
-
-    if ($result = mysqli_query($link, "$sql")) {
+    $link = dbInit();
+    if ($result = mysqli_query($link, $sql)) {
         // 执行成功
         return $result;
+
     } else {
         // 执行失败，显示错误信息以便于调试程序
         echo 'SQL执行失败:<br>';
